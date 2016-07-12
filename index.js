@@ -46,11 +46,16 @@ oauth2Client.getToken(code, function(err, tokens) {
     oauth2Client.setCredentials(tokens);
 
       //now safe to call calendar api :)
-console.log(calendar.calendar);
+
 
 
       calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},function(err,res){
 
+if(err){
+
+    console.log(err);
+    
+}
           console.log(res.items);
 
 
