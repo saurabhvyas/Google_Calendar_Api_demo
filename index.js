@@ -27,15 +27,7 @@ console.log('express server running on 9600');
 
 });
 
-app.get('/events',function(req,res){
 
-console.log('api endpoint to get all events');
-
-
-
-
-
-});
 
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
@@ -73,6 +65,47 @@ oauth2Client.getToken(code, (err, tokens)=> {
       //now safe to call calendar api :)
 
 
+app.get('/events',function(req,res){
+
+
+
+console.log('api endpoint to get all events');
+
+
+calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,result)=>{
+
+if(err) {
+
+    console.log(err);
+
+res.send(err);
+
+}
+
+
+
+
+console.log(result.items);
+res.send(result);
+
+
+
+
+
+});
+
+
+})
+
+
+
+
+
+
+
+   
+
+
 
    
   }
@@ -83,28 +116,15 @@ oauth2Client.getToken(code, (err, tokens)=> {
 
 });
 
-
-
-   calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,res)=>{
-
-if(err) {
-
-    console.log(err);
-
-}
-
-
-else{
-
-console.log(res.items);
-
-}
+});
 
 
 
+   
 
 
-      });
+
+      
 
 
 
