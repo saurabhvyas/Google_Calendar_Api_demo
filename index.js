@@ -49,9 +49,9 @@ oauth2Client.getToken(code, function(err, tokens) {
 console.log(calendar.calendar);
 
 
-      calendar.events.list({userId:'me',auth:oauth2Client,calendarId:'primary'},function(err,res){
+      calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},function(err,res){
 
-          console.log(res);
+          console.log(res.items);
 
 
       })
