@@ -84,6 +84,12 @@ res.send(err);
 
 
 
+if(result.items.length===0){
+    console.log('no event exist');
+    res.send('there is no event');
+
+}
+
 
 console.log(result.items);
 res.send(result);
