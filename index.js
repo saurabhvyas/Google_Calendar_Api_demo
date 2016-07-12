@@ -1,10 +1,11 @@
 
 'use strict';
 
+
 var express=require('express');
 
 
-var readline = require('readline');
+var readline = require('readline');  // Ill use this for reading from console window
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
@@ -14,6 +15,8 @@ var calendar=google.calendar('v3');
 var REDIRECT_URL='http://localhost';
 var CLIENT_ID = '329941363904-omeq5bktiollrrdlckb1umh4tidkhga6.apps.googleusercontent.com';
 var CLIENT_SECRET='1gsXS_5O-ugt5TKlKEjFTy27';
+
+
 
 
 var app=express();
@@ -27,6 +30,8 @@ console.log('express server running on 9600');
 app.get('/events',function(req,res){
 
 console.log('api endpoint to get all events');
+
+
 
 
 
@@ -49,17 +54,18 @@ var url = oauth2Client.generateAuthUrl({
   scope: scopes // If you only need one scope you can pass it as string
 });
 
+console.log('Please visit the following url and get your token');
 
 console.log(url);
 
 
 let code="insert code tht users gets from google here";
 
-rl.question('enter code here',function(code1){
+rl.question('enter code here',(code1)=>{
 
 code=code1;
 
-oauth2Client.getToken(code, function(err, tokens) {
+oauth2Client.getToken(code, (err, tokens)=> {
   // Now tokens contains an access_token and an optional refresh_token. Save them.
   if(!err) {
     oauth2Client.setCredentials(tokens);
@@ -70,35 +76,35 @@ oauth2Client.getToken(code, function(err, tokens) {
 
    
   }
+
   else{
       console.log(err);
-
-
-
-
-
-    
-
   }
+
 });
 
 
 
-   calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},function(err,res){
+   calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,res)=>{
 
-if(err){
+if(err) {
 
     console.log(err);
 
 }
-          console.log(res.items);
+
+
+else{
+
+console.log(res.items);
+
+}
+
+
+
 
 
       });
-      
-
-
-});
 
 
 
