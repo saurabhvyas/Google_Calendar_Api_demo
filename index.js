@@ -1,6 +1,9 @@
 
 'use strict';
 
+var express=require('express');
+
+
 var readline = require('readline');
 
 var google = require('googleapis');
@@ -12,6 +15,22 @@ var REDIRECT_URL='http://localhost';
 var CLIENT_ID = '329941363904-omeq5bktiollrrdlckb1umh4tidkhga6.apps.googleusercontent.com';
 var CLIENT_SECRET='1gsXS_5O-ugt5TKlKEjFTy27';
 
+
+var app=express();
+
+app.listen(9600,function(){
+
+console.log('express server running on 9600');
+
+});
+
+app.get('/events',function(req,res){
+
+console.log('api endpoint to get all events');
+
+
+
+});
 
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
@@ -54,7 +73,7 @@ oauth2Client.getToken(code, function(err, tokens) {
 if(err){
 
     console.log(err);
-    
+
 }
           console.log(res.items);
 
