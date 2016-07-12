@@ -3,6 +3,8 @@
 
 
 var express=require('express');
+var bodyParser = require('body-parser');
+
 
 
 var readline = require('readline');  // Ill use this for reading from console window
@@ -17,9 +19,15 @@ var CLIENT_ID = '329941363904-omeq5bktiollrrdlckb1umh4tidkhga6.apps.googleuserco
 var CLIENT_SECRET='1gsXS_5O-ugt5TKlKEjFTy27';
 
 
+var moment = require('moment');
+// moment().format();
+
 
 
 var app=express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.listen(9600,function(){
 
@@ -65,7 +73,47 @@ oauth2Client.getToken(code, (err, tokens)=> {
       //now safe to call calendar api :)
 
 
+
+app.get('/events/date/:startdate/:enddate',function(req,res){
+
+
+//  call calendar.events.list api with start and end date params
+
+
+
+});
+
+
+
+
 app.get('/events',function(req,res){
+
+
+if(!req.query.startdate){
+
+
+console.log('no start date specified');
+
+
+
+}
+
+
+else{
+
+  console.log(req.body);
+
+
+  
+// console.log('now returns events in this specific range');
+
+console.log('req startdate' + req.query.startdate);
+console.log('req enddate ' + req.query.enddate);
+
+
+
+
+}
 
 
 
@@ -91,7 +139,7 @@ if(result.items.length===0){
 }
 
 
-console.log(result.items);
+// console.log(result.items);
 res.send(result);
 
 
