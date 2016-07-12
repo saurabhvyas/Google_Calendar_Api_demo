@@ -68,17 +68,7 @@ oauth2Client.getToken(code, function(err, tokens) {
 
 
 
-      calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},function(err,res){
-
-if(err){
-
-    console.log(err);
-
-}
-          console.log(res.items);
-
-
-      })
+   
   }
   else{
       console.log(err);
@@ -92,6 +82,20 @@ if(err){
   }
 });
 
+
+
+   calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},function(err,res){
+
+if(err){
+
+    console.log(err);
+
+}
+          console.log(res.items);
+
+
+      });
+      
 
 
 });
