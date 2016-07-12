@@ -19,8 +19,8 @@ var CLIENT_ID = '329941363904-omeq5bktiollrrdlckb1umh4tidkhga6.apps.googleuserco
 var CLIENT_SECRET='1gsXS_5O-ugt5TKlKEjFTy27';
 
 
-var moment = require('moment');
-// moment().format();
+// var moment = require('moment');
+//moment().format();
 
 
 
@@ -74,14 +74,7 @@ oauth2Client.getToken(code, (err, tokens)=> {
 
 
 
-app.get('/events/date/:startdate/:enddate',function(req,res){
 
-
-//  call calendar.events.list api with start and end date params
-
-
-
-});
 
 
 
@@ -109,6 +102,16 @@ else{
 
 console.log('req startdate' + req.query.startdate);
 console.log('req enddate ' + req.query.enddate);
+
+let startdate= new Date(req.query.startdate).toISOString;
+
+let enddate= new Date(req.query.enddated).toISOString;
+
+
+
+
+console.log('start date in iso format is :');
+console.log(startdate);
 
 
 
