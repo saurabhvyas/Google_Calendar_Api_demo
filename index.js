@@ -88,6 +88,30 @@ if(!req.query.startdate){
 console.log('no start date specified');
 
 
+console.log('api endpoint to get all events');
+
+
+calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,result)=>{
+
+if(err) {
+    console.log(err);
+res.send(err);
+}
+
+
+
+if(result.items.length===0){
+    console.log('no event exist');
+    res.send('there is no event');
+}
+
+
+// console.log(result.items);
+res.send(result);
+});
+
+
+
 
 }
 
@@ -178,6 +202,8 @@ var newresult_pretty = newresults.map((item)=>{
  console.log(newresult_pretty);
  console.log('count :' + newresult_pretty.length);
 
+res.send(newresult_pretty);
+
 
 }
 
@@ -193,28 +219,6 @@ var newresult_pretty = newresults.map((item)=>{
 }  
 
 
-
-console.log('api endpoint to get all events');
-
-
-calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,result)=>{
-
-if(err) {
-    console.log(err);
-res.send(err);
-}
-
-
-
-if(result.items.length===0){
-    console.log('no event exist');
-    res.send('there is no event');
-}
-
-
-// console.log(result.items);
-res.send(result);
-});
 
 
 })
