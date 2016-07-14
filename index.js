@@ -19,8 +19,8 @@ var CLIENT_ID = '329941363904-omeq5bktiollrrdlckb1umh4tidkhga6.apps.googleuserco
 var CLIENT_SECRET='1gsXS_5O-ugt5TKlKEjFTy27';
 
 
-// var moment = require('moment');
-//moment().format();
+ var moment = require('moment');
+ moment().format();
 
 
 
@@ -92,7 +92,7 @@ console.log('no start date specified');
 }
 
 
-else{
+else if (req.query.startdate) {
 
   console.log(req.body);
 
@@ -103,20 +103,94 @@ else{
 console.log('req startdate' + req.query.startdate);
 console.log('req enddate ' + req.query.enddate);
 
-let startdate= new Date(req.query.startdate).toISOString;
+let startdate= new Date(req.query.startdate);
+let startdate_iniso=startdate.toISOString();
+let startdate_moment= moment(startdate_iniso);
 
-let enddate= new Date(req.query.enddated).toISOString;
 
+let enddate= new Date(req.query.enddate);
+
+let enddate_iniso=enddate.toISOString();
+
+let enddate_moment = moment(enddate_iniso);
 
 
 
 console.log('start date in iso format is :');
-console.log(startdate);
+console.log(startdate_iniso);
 
 
+console.log('end date in iso format is :');
+console.log(enddate_iniso);
+
+calendar.events.list({userId:'me',auth:oauth2Client,calendarId:"primary",timeMax:enddate_iniso},(err,results)=>{
+
+if(err){
+
+  console.log(err);
+
+}
+
+else {
+
+  console.log('events that start max by a specific date');
+// console.log(results);
+
+
+
+
+  var  newresults =  results.items.filter((item)=>{
+
+
+    console.log('ending constraint for events is ' + enddate_moment.format());
+    console.log('event actual end time : ' +  moment(item.end.dateTime).format());
+
+    
+    console.log('starting constraint for events is ' +startdate_moment.format());
+
+    console.log('event actual starting time is' + moment(item.start.dateTime).format());
+
+
+//
+    
+    
+
+
+if  (moment(item.end.dateTime).isSameOrBefore(enddate_moment) && moment(item.start.dateTime).isSameOrAfter(startdate_moment)){
+
+  return true;
+
+}
+
+}); 
+
+
+var newresult_pretty = newresults.map((item)=>{
+
+  return {
+    description:item.description,
+    summary:item.summary,
+    start:item.start.dateTime,
+    end:item.end.dateTime
+  }
+});
+
+ console.log(newresult_pretty);
+ console.log('count :' + newresult_pretty.length);
 
 
 }
+
+
+}); 
+
+
+
+
+
+
+
+}  
 
 
 
@@ -126,11 +200,8 @@ console.log('api endpoint to get all events');
 calendar.events.list({userId: 'me', auth: oauth2Client,calendarId:"primary"},(err,result)=>{
 
 if(err) {
-
     console.log(err);
-
 res.send(err);
-
 }
 
 
@@ -138,34 +209,17 @@ res.send(err);
 if(result.items.length===0){
     console.log('no event exist');
     res.send('there is no event');
-
 }
 
 
 // console.log(result.items);
 res.send(result);
-
-
-
-
-
 });
 
 
 })
 
-
-
-
-
-
-
-   
-
-
-
-   
-  }
+ }
 
   else{
       console.log(err);
