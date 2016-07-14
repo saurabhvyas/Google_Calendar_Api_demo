@@ -1,0 +1,15 @@
+
+
+API which use Google Calendar -> Events Api using Oauth2
+
+Author : Saurabh Vyas 
+
+make sure app packages are installed , then run node index.js
+
+There are 2 api endpoints
+
+/events , this will return all events
+
+/events?startdate=yyyy/mm/dd&endate=yyyy/mm/dd , this will restrict results withing specified range
+
+
